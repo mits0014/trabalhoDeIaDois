@@ -1,1 +1,18 @@
+# Ignorar arquivos sensíveis
 senhabanco.txt
+.env
+
+# Ignorar caches do Python
+__pycache__/
+*.py[cod]
+
+# Ignorar arquivos de Jupyter
+*.ipynb_checkpoints
+
+# Ignorar virtual environments
+venv/
+.env/
+
+# Ignorar arquivos temporários de sistema
+.DS_Store
+Thumbs.db

@@ -32,7 +32,7 @@ def salvar_resultado_modelo(nome, matriz_confusao, acuracia, precisao, recall, f
         parametros (dict): Dicionário com os hiperparâmetros do modelo.
     """
     user="postgres.pbrgokfauzknintkqxgk" 
-    password="9FwYA4-kG8mUemj"
+    password=""
     host="aws-0-sa-east-1.pooler.supabase.com"
     port=6543
     dbname="postgres"
