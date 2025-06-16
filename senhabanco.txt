@@ -1,0 +1,15 @@
+9FwYA4-kG8mUemj
+
+
+estrutura da tabela
+CREATE TABLE resultados_modelos (
+    id SERIAL PRIMARY KEY,
+    modelo VARCHAR(50),
+    acuracia REAL,
+    precisao REAL,
+    recall REAL,
+    f1_score REAL,
+    matriz_confusao JSONB,
+    parametros JSONB,
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
