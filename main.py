@@ -12,11 +12,13 @@ from sklearn.metrics import (
 import seaborn as sns
 import matplotlib.pyplot as plt
 import clientdb as db
+from sklearn.utils import shuffle
+
 
 # 1. Carregar dataset
-spambase = fetch_ucirepo(id=94)
-X = spambase.data.features
-y = spambase.data.targets
+letter_recognition = fetch_ucirepo(id=59)
+X = letter_recognition.data.features
+y = letter_recognition.data.targets
 
 print("Dados de entrada (X):")
 print(X.head())
@@ -24,8 +26,19 @@ print(X.head())
 print("\nAlvo (y):")
 print(y.head())
 
-# 2. Dividir em treino e teste
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+# 1. Embaralhar a base original
+X, y = shuffle(X, y, random_state=42)  # Garante aleatoriedade
+
+# 2. Dividir: 50% treino, 50% temporário (validação + teste)
+X_train, X_temp, y_train, y_temp = train_test_split(
+    X, y, test_size=0.5, stratify=y, random_state=42
+)
+
+# 3. Dividir os 50% restantes igualmente: 25% validação e 25% teste
+X_val, X_test, y_val, y_test = train_test_split(
+    X_temp, y_temp, test_size=0.5, stratify=y_temp, random_state=42
+)
+
 
 # Função auxiliar para avaliação
 def avaliar_modelo(nome, y_true, y_pred):
