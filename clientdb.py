@@ -18,7 +18,7 @@ def conectar(host, dbname, user, password, port):
         return None
 
 
-def salvar_resultado_modelo(nome, matriz_confusao, acuracia, precisao, recall, f1_score, parametros):
+def salvar_resultado_modelo(nome, matriz_confusao, acuracia, precisao, recall, f1_score, parametros, report ):
     """
     Salva os resultados do modelo em sua tabela específica no banco de dados.
     
@@ -30,6 +30,7 @@ def salvar_resultado_modelo(nome, matriz_confusao, acuracia, precisao, recall, f
         recall (float): Recall médio.
         f1_score (float): F1-score médio.
         parametros (dict): Dicionário com os hiperparâmetros do modelo.
+        report (dict): Relatório de classificação do modelo.
     """
     user="postgres.pbrgokfauzknintkqxgk" 
     password=""
@@ -43,9 +44,10 @@ def salvar_resultado_modelo(nome, matriz_confusao, acuracia, precisao, recall, f
 
     # Nome da tabela baseado no nome do modelo
 
-    # Serializar matriz de confusão e parâmetros como JSON
+    # Serializar matriz de confusão, parâmetros e report como JSON
     matriz_confusao_json = json.dumps(matriz_confusao)
     parametros_json = json.dumps(parametros)
+    reoprt = json.dumps(report)
 
     # Montar o comando SQL (cada tabela tem a mesma estrutura base)
     sql = """
@@ -56,8 +58,9 @@ def salvar_resultado_modelo(nome, matriz_confusao, acuracia, precisao, recall, f
         recall,
         f1_score,
         matriz_confusao,
-        parametros
-    ) VALUES (%s, %s, %s, %s, %s, %s, %s)
+        parametros,
+        classification_report
+    ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
     """
     try:
         # Executar o comando
@@ -68,7 +71,8 @@ def salvar_resultado_modelo(nome, matriz_confusao, acuracia, precisao, recall, f
             recall,
             f1_score,
             matriz_confusao_json,
-            parametros_json
+            parametros_json,
+            reoprt
         ))
         conn.commit()
     except Exception as e:

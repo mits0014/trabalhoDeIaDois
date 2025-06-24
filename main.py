@@ -82,7 +82,8 @@ def salva_resultados_modelo(nome, y_true, y_pred, parametros=None):
         precisao=precision,
         recall=recall,
         f1_score=f1_score,
-        parametros=parametros
+        parametros=parametros,
+        report=report
     )
 
 
@@ -136,9 +137,9 @@ salva_resultados_modelo(
 
 # 6. MLP
 clf_mlp = MLPClassifier(
-    hidden_layer_sizes=(50, 50),
+    hidden_layer_sizes=(200, 100,50,25),
     activation='relu',
-    max_iter=300,
+    max_iter=30000,
     learning_rate='constant',
     learning_rate_init=0.001
 )
